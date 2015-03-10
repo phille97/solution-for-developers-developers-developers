@@ -1,7 +1,7 @@
 # Lösningar på arbetsprov för Duva
 https://github.com/DuvaAB/developers-developers-developers
 
-### Skapa ett api i Python (`python-api/api.py`)
+### Skapa ett api i Python (`python_api/api.py`)
 
 ##### Använder "Flask" (http://flask.pocoo.org)!
 
