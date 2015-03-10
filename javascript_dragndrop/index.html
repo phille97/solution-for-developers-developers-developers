@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+	<div class="flex">
+		<div class="dropbox" id="droptarget">
+			I eat boxes! :D
+		</div>
+
+		<div class="box" id="box1" draggable="true">
+			Box 1
+		</div>
+		<div class="box" id="box2" draggable="true">
+			Box 2
+		</div>
+		<div class="box" id="box3" draggable="true">
+			Box 3
+		</div>
+		<div class="box" id="box4" draggable="true">
+			Box 4
+		</div>
+		<div class="box" id="box5" draggable="true">
+			Box 5
+		</div>
+	</div>
+	<script>
+	var droptarget = document.getElementById("droptarget");
+	var boxes = document.getElementsByClassName("box");
+	for(i=0 ; i<boxes.length ; i++){
+		boxes[i].addEventListener("dragstart", function(event){
+			event.dataTransfer.setData("id", this.id);
+			return false;
+		});
+	}
+	droptarget.addEventListener('dragenter', function(event) {
+		this.className = "dropbox ready";
+	});
+	droptarget.addEventListener('dragover', function(event) {
+	  event.preventDefault();
+		event.dataTransfer.dropEffect = 'move';
+	  return false;
+	});
+	droptarget.addEventListener('dragleave', function(event) {
+		this.className = "dropbox";
+	});
+	droptarget.addEventListener('drop', function(event) {
+	  this.className = "dropbox";
+		var droppedItem = document.getElementById(event.dataTransfer.getData("id"));
+		droppedItem.className= "box hidden";
+	  this.innerHTML = "I ate " + droppedItem.innerHTML;
+	  return false;
+	});
+	</script>
+</body>
+</html>

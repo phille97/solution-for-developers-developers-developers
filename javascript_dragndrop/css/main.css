@@ -1,0 +1,29 @@
+.flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.box{
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.dropbox {
+  margin: 20px;
+  padding: 20px;
+  width: 300px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.ready {
+  border: 1px dotted black;
+}
+
+.hidden {
+  opacity: 0.1;
+}

@@ -1,0 +1,107 @@
+  <!doctype html>
+  <html>
+  <head>
+    <title>Muh database</title>
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <style>
+    .container {
+      width: 1000px;
+    }
+    table {
+      border: 1px solid black;
+      border-spacing: 0;
+      width: 100%;
+    }
+    thead td {
+      font-weight: bold;
+    }
+    </style>
+  </head>
+  <body>
+    <center>
+      <div class="container">
+        <table id="results">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Price</td>
+              <td>Text1</td>
+              <td>Text2</td>
+
+              <td>Last updated</td>
+              <td>Created</td>
+            </tr>
+          </thead>
+          <tbody id="result-list">
+            <tr style="display: none;"></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <form id="newProduct-form" onsubmit="return addItemFromform($('#' + this.id).serialize(), this.id)">
+                <td><input type="text" name="NAME" placeholder="Name" required /></td>
+                <td><input type="number" name="PRICE" placeholder="Price" required /></td>
+                <td><input type="text" name="TEXTVAL1" placeholder="Textval1" /></td>
+                <td><input type="text" name="TEXTVAL2" placeholder="Textval2" /></td>
+                <td><button>Add new product</button></td>
+              </form>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </center>
+    <script>
+    var addItemFromform = function(formData, formID) {
+      $.ajax({
+        url: "/add",
+        method: "POST",
+        statusCode: {
+          400: function(){
+            alert("Error 400 Bad request");
+          },
+          201: function(){
+            console.log("Item added!");
+          }
+        },
+        data: formData
+      }).done(function(response) {
+        addtablerow(response);
+        $('#' + formID).trigger("reset");
+      });
+      return false;
+    }
+      $.ajax({
+        url: "/getall",
+        method: "GET"
+      }).done(function(response) {
+        if(response.products.length <= 0) console.log("No items found");
+        var darkbg = true;
+        for(var i = 0; i < response.products.length; i++){
+          var product = response.products[i];
+          addtablerow(product);
+        }
+      });
+      var darkbg = true;
+      var addtablerow = function(product){
+        if(darkbg) {
+          var tableRow = "<tr style='background-color: #DEDEDE;'>"
+          darkbg = false;
+        }else{
+          var tableRow = "<tr>"
+          darkbg = true;
+        }
+        tableRow += "\
+        <td>" + product.PRODUCT.NAME + "</td>\
+        <td>" + product.PRODUCT.PRICE + "</td>\
+        <td>" + product.PRODUCT.TEXTVAL1 + "</td>\
+        <td>" + product.PRODUCT.TEXTVAL2 + "</td>\
+        \
+        <td>" + new Date(product.META.LASTUPDATED * 1000).toUTCString() + "</td>\
+        <td>" + new Date(product.META.CREATED     * 1000).toUTCString() + "</td>\
+        \
+        </tr>";
+
+        $("#result-list tr:last").after(tableRow);
+      }
+    </script>
+  </body>
+  </html>
