@@ -29,5 +29,5 @@ password_verify($rawpassword, $hashedpassword)
 En enkel dragndrop, som tonar ner den divven som blev släppt
 
 ### Kontakt info
-Tel: 0739876185
-Email: philip.johansson [at] hotmail.se
+Tel: -
+Email: -
